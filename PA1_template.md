@@ -101,7 +101,7 @@ ss_new
 ##      41    9819   10770   10770   12810   21190
 ```
 
-After fill in the missing values of steps with the average value of the interval, the newly calculated mean for the number of steps is 1.077\times 10^{4}, which does not change.While median for the number of steps 1.077\times 10^{4} is larger than the calculated mean with missing values.
+After fill in the missing values of steps with the average value of the interval, the newly calculated mean for the number of steps is 1.077\times 10^{4}, which does not change.While median for the number of steps 1.077\times 10^{4} is larger than the calculated mean with missing values. The impact of imputing missing data on the estimates of the total daily number of steps less biased.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 

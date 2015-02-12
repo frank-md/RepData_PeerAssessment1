@@ -65,7 +65,7 @@ ss_new <- summary(df_sum_new$steps)
 ss_new
 ```
 
-After fill in the missing values of steps with the average value of the interval, the newly calculated mean for the number of steps is `r ss_new["Mean"]`, which does not change.While median for the number of steps `r ss_new["Median"]` is larger than the calculated mean with missing values.
+After fill in the missing values of steps with the average value of the interval, the newly calculated mean for the number of steps is `r ss_new["Mean"]`, which does not change.While median for the number of steps `r ss_new["Median"]` is larger than the calculated mean with missing values. The impact of imputing missing data on the estimates of the total daily number of steps less biased.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 ```{r, echo=TRUE}
