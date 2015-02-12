@@ -23,7 +23,8 @@ hist(df_sum$steps, xlab="total numbers of steps taken per day",main="Histogram o
 
 ```r
 #Calculate and report the mean and median of the total #number of steps taken per day
-summary(df_sum$steps)
+ss<-summary(df_sum$steps)
+ss
 ```
 
 ```
@@ -31,6 +32,10 @@ summary(df_sum$steps)
 ##      41    8841   10760   10770   13290   21190
 ```
 
+The mean total number of steps taken per day is
+1.077\times 10^{4}
+The median total number of steps taken per day is
+1.076\times 10^{4}
 
 ## What is the average daily activity pattern?
 
@@ -53,7 +58,7 @@ subset(df_avg,df_avg$step == max(df_avg$steps))
 ## 104      835 206.1698
 ```
 
-As shown in the plot, the average daily activity is peaked around 8:35 am ( walking to work? ), and almost no activity between midnight and 5:00 am.
+As shown in the plot, the average daily activity is peaked at 8:35 interval ( walking to work? ), and almost no activity between midnight and 5:00 am.
 
 ## Imputing missing values
 
@@ -87,7 +92,8 @@ hist(df_sum_new$steps, xlab="total numbers of steps taken per day with imputed m
 
 ```r
 #Calculate and report the mean and median of the total #number of steps taken per day
-summary(df_sum_new$steps)
+ss_new <- summary(df_sum_new$steps)
+ss_new
 ```
 
 ```
@@ -95,7 +101,7 @@ summary(df_sum_new$steps)
 ##      41    9819   10770   10770   12810   21190
 ```
 
-After fill in the missing values of steps with the average value of the time slot, the newly calculated mean for the number of steps does not change while median shift down comparing the calculated mean with missing values.
+After fill in the missing values of steps with the average value of the interval, the newly calculated mean for the number of steps is 1.077\times 10^{4}, which does not change.While median for the number of steps 1.077\times 10^{4} is larger than the calculated mean with missing values.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
@@ -118,6 +124,5 @@ qplot(interval, steps,data=df_comb,facets=weekdays~.,geom=c("line"),ylab="Number
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
-
 
 The plots shows decreased activities in weekend comparing with weekdays.

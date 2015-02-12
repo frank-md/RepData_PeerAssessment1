@@ -21,9 +21,14 @@ df_sum <- aggregate(steps ~ date, df, sum)
 # make histogram of total number of steps taken per day
 hist(df_sum$steps, xlab="total numbers of steps taken per day",main="Histogram of total numbers of steps taken per day",breaks=22)
 #Calculate and report the mean and median of the total #number of steps taken per day
-summary(df_sum$steps)
+ss<-summary(df_sum$steps)
+ss
 ```
 
+The mean total number of steps taken per day is
+`r ss["Mean"]`
+The median total number of steps taken per day is
+`r ss["Median"]`
 
 ## What is the average daily activity pattern?
 ```{r,echo=TRUE}
@@ -35,7 +40,7 @@ plot(df_avg$interval,df_avg$step,type="l",xlab="Interval",ylab="average number o
 subset(df_avg,df_avg$step == max(df_avg$steps))
 ```
 
-As shown in the plot, the average daily activity is peaked around 8:35 am ( walking to work? ), and almost no activity between midnight and 5:00 am.
+As shown in the plot, the average daily activity is peaked at 8:35 interval ( walking to work? ), and almost no activity between midnight and 5:00 am.
 
 ## Imputing missing values
 ```{r,echo=TRUE}
@@ -56,11 +61,11 @@ df_sum_new <- aggregate(steps ~ date, df_new, sum)
 # make histogram of total number of steps taken per day
 hist(df_sum_new$steps, xlab="total numbers of steps taken per day with imputed missing values ",main="Histogram of total numbers of steps taken per day",breaks=22)
 #Calculate and report the mean and median of the total #number of steps taken per day
-summary(df_sum_new$steps)
-
+ss_new <- summary(df_sum_new$steps)
+ss_new
 ```
 
-After fill in the missing values of steps with the average value of the time slot, the newly calculated mean for the number of steps does not change while median shift down comparing the calculated mean with missing values.
+After fill in the missing values of steps with the average value of the interval, the newly calculated mean for the number of steps is `r ss_new["Mean"]`, which does not change.While median for the number of steps `r ss_new["Median"]` is larger than the calculated mean with missing values.
 
 ## Are there differences in activity patterns between weekdays and weekends?
 ```{r, echo=TRUE}
@@ -79,8 +84,6 @@ df_comb$weekdays <- factor(df_comb$weekdays)
 # weekday and weekend
 library(ggplot2)
 qplot(interval, steps,data=df_comb,facets=weekdays~.,geom=c("line"),ylab="Number of steps")
-
 ```
-
 
 The plots shows decreased activities in weekend comparing with weekdays.
