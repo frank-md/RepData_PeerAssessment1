@@ -50,7 +50,8 @@ plot(df_avg$interval,df_avg$step,type="l",xlab="Interval",ylab="average number o
 ```r
 # find 5-minute interval, on average across all the days 
 # in the dataset, contains the maximum number of steps
-subset(df_avg,df_avg$step == max(df_avg$steps))
+max_int <- subset(df_avg,df_avg$step == max(df_avg$steps))
+max_int
 ```
 
 ```
@@ -58,29 +59,38 @@ subset(df_avg,df_avg$step == max(df_avg$steps))
 ## 104      835 206.1698
 ```
 
-As shown in the plot, the average daily activity is peaked at 8:35 interval ( walking to work? ), and almost no activity between midnight and 5:00 am.
+As shown in the plot, the average daily activity is peaked at interval 835 with 206.1698113 steps ( walking to work? ), and almost no activity between midnight and 5:00 am.
 
 ## Imputing missing values
+
 
 ```r
 #Calculate and report the total number of missing values #in the dataset (i.e. the total number of rows with NAs)
 steps <-df$step
-length(steps[is.na(steps)])
+mis <-length(steps[is.na(steps)])
+mis
 ```
 
 ```
 ## [1] 2304
 ```
+The total number of missing values is 2304
+
+Fill the missing values with means of the 5 min inteval calculated in the previous step. The details are described in the comments of R code shown below:
 
 ```r
-# fill the missing value with means of that 5 min inteval
+# obtain a missing value data frame, and completed case data frames
 df_complete <-df[complete.cases(df),]
 df_na <-df[is.na(df$step),]
-df_merge <-merge(df_avg,df_na,by="interval") # fill mean
-df_impute <- subset(df_merge,select=c("steps.x","date","interval")) # only take the columns needed
-names(df_impute)[1] <-"steps" # rename column
-df_new <-rbind(df_complete,df_impute) # combine two
-# Create new dataset that is equal to the original dataset # but with the missing data filled in.
+# merge the missing value data frame with calculated mean data frame
+df_merge <-merge(df_avg,df_na,by="interval")
+# obtain the imputed data frame with means by subseting 
+df_impute <- subset(df_merge,select=c("steps.x","date","interval"))
+# rename the column to steps
+names(df_impute)[1] <-"steps"
+# combine the imputed and compledted data frames to create a new dataset that is equal to the original dataset. 
+df_new <-rbind(df_complete,df_impute) 
+# order it by date and interval
 df_new <- df_new[order(df_new$date,df_new$interval),] 
 # calculate total number of steps taken per day
 df_sum_new <- aggregate(steps ~ date, df_new, sum)
@@ -88,7 +98,7 @@ df_sum_new <- aggregate(steps ~ date, df_new, sum)
 hist(df_sum_new$steps, xlab="total numbers of steps taken per day with imputed missing values ",main="Histogram of total numbers of steps taken per day",breaks=22)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 ```r
 #Calculate and report the mean and median of the total #number of steps taken per day
@@ -123,6 +133,6 @@ library(ggplot2)
 qplot(interval, steps,data=df_comb,facets=weekdays~.,geom=c("line"),ylab="Number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-6-1.png) 
 
 The plots shows decreased activities in weekend comparing with weekdays.
